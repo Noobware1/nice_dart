@@ -153,5 +153,10 @@ void main() {
       expect('123.45'.toDoubleOrNull(), equals(123.45));
       expect('abc'.toDoubleOrNull(), isNull);
     });
+
+    test('orEmpty', () {
+      expect('abc'.orEmpty(), equals('abc'));
+      expect(null.orEmpty(), equals(''));
+    });
   });
 }

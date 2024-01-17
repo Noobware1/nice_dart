@@ -1,6 +1,23 @@
 import 'package:dartx/src/extensions/object.dart';
 import 'package:dartx/src/extensions/iterable.dart';
 
+extension OrEmptyList<E> on List<E>? {
+  List<E> orEmpty() {
+    return this ?? [];
+  }
+}
+
+extension FaltExtensions<E> on List<List<E>> {
+  List<E> flatten() => [for (final list in this) ...list];
+}
+
+extension ToIterable<E> on List<E>? {
+  Iterable<E> toIterable() {
+    return isNull
+        ? Iterable.empty()
+        : Iterable.generate(this!.length, (i) => this![i]);
+  }
+}
 
 extension MapListNotNull<E> on Iterable<E?> {
   List<R> mapListNotNull<R>(R Function(E it) transform) {

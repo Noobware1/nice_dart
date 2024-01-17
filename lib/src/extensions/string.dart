@@ -168,4 +168,6 @@ extension NullableStringExtensions on String? {
   int? toIntOrNull() => isNull ? null : int.tryParse(this!);
 
   double? toDoubleOrNull() => isNull ? null : double.tryParse(this!);
+
+  String orEmpty() => this ?? '';
 }

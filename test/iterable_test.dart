@@ -73,4 +73,22 @@ void main() {
           equals([1, 3, 6]));
     });
   });
+
+  group('OrEmptyIterable', () {
+    test('orEmpty', () {
+      expect([1, 2, 3].orEmpty(), equals([1, 2, 3]));
+      expect(null.orEmpty(), equals([]));
+    });
+  });
+
+  group('FaltExtensionsOnIterable', () {
+    test('faltten', () {
+      expect(
+          [
+            [1, 2, 3],
+            [4, 5, 6]
+          ].flatten(),
+          equals([1, 2, 3, 4, 5, 6]));
+    });
+  });
 }

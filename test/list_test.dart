@@ -77,4 +77,29 @@ void main() {
       expect(null.isNotEmptyOrNull, equals(false));
     });
   });
+
+  group('OrEmptyList', () {
+    test('orEmpty', () {
+      expect([1, 2, 3].orEmpty(), equals([1, 2, 3]));
+      expect(null.orEmpty(), equals([]));
+    });
+  });
+
+  group('FaltExtensionsOnList', () {
+    test('faltten', () {
+      expect(
+          [
+            [1, 2, 3],
+            [4, 5, 6]
+          ].flatten(),
+          equals([1, 2, 3, 4, 5, 6]));
+    });
+  });
+
+  group('ToIterable', () {
+    test('toIterable', () {
+      expect(
+          [1, 2, 3].toIterable(), equals(Iterable.generate(3, (i) => i + 1)));
+    });
+  });
 }

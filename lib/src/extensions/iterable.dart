@@ -1,5 +1,19 @@
 import 'package:dartx/src/extensions/object.dart';
 
+extension OrEmptyIterable<E> on Iterable<E>? {
+  Iterable<E> orEmpty() {
+    return this ?? Iterable.empty();
+  }
+}
+
+extension FaltExtensionsOnIterable<E> on List<List<E>> {
+  Iterable<E> flatten() sync* {
+    for (final list in this) {
+      yield* list;
+    }
+  }
+}
+
 extension MapNotNull<E> on Iterable<E?> {
   Iterable<R> mapNotNull<R>(R Function(E it) transform) sync* {
     for (final element in this) {
