@@ -9,6 +9,7 @@ export 'src/extensions/object.dart';
 export 'src/builders.dart';
 export 'src/functions.dart';
 export 'src/result.dart';
+export 'src/pair.dart';
 // export 'src/extensions/num.dart';
 // export 'src/extensions/set.dart';
 
