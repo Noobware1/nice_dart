@@ -1,4 +1,3 @@
-
 /// A discriminated union that encapsulates a successful outcome with a value of type T or a failure with an arbitrary Exception exception.
 class Result<T> {
   final dynamic value;
@@ -78,7 +77,7 @@ extension<T> on Result<T> {
 /// Calls the specified function block and returns its encapsulated result if invocation was successful, catching any Throwable exception that was thrown from the block function execution and encapsulating it as a failure.
 Result<R> runCatching<R>(R Function() block) => _runCatching(block);
 
-extension RunCatching<R> on R {
+extension RunCatchingExtensions<R> on R {
   /// Calls the specified function block and returns its encapsulated result if invocation was successful, catching any Throwable exception that was thrown from the block function execution and encapsulating it as a failure.
   Result<R> runCatching(R Function() block) {
     return _runCatching(block);
@@ -93,7 +92,7 @@ Result<R> _runCatching<R>(R Function() block) {
   }
 }
 
-extension GetOrThrow<T> on Result<T> {
+extension GetOrThrowExtensions<T> on Result<T> {
   /// Returns the encapsulated value if this instance represents success or throws the encapsulated Throwable exception if it is failure.
   /// This function is a shorthand for getOrElse { throw it } (see getOrElse).
   T getOrThrow() {
@@ -102,7 +101,7 @@ extension GetOrThrow<T> on Result<T> {
   }
 }
 
-extension GetOrElse<T> on Result<T> {
+extension GetOrElseExtensions<T> on Result<T> {
   /// Returns the encapsulated value if this instance represents success or the result of onFailure function for the encapsulated Throwable exception if it is failure.
   /// Note, that this function rethrows any Throwable exception thrown by onFailure function.
   /// This function is a shorthand for fold(onSuccess = { it }, onFailure = onFailure) (see fold).
@@ -112,7 +111,7 @@ extension GetOrElse<T> on Result<T> {
   }
 }
 
-extension GetOrDefault<T> on Result<T> {
+extension GetOrDefaultExtensions<T> on Result<T> {
   /// Returns the encapsulated value if this instance represents success or the defaultValue if it is failure.
   /// This function is a shorthand for getOrElse { defaultValue } (see getOrElse).
   T getOrDefault(T defaultValue) {
@@ -121,7 +120,7 @@ extension GetOrDefault<T> on Result<T> {
   }
 }
 
-extension Fold<T> on Result<T> {
+extension FoldExtensions<T> on Result<T> {
   /// Returns the result of onSuccess for the encapsulated value if this instance represents success or the result of onFailure function for the encapsulated Throwable exception if it is failure.
   /// Note, that this function rethrows any Throwable exception thrown by onSuccess or by onFailure function.
   R fold<R>(
@@ -135,7 +134,7 @@ extension Fold<T> on Result<T> {
   }
 }
 
-extension Map<T> on Result<T> {
+extension MappingExtensions<T> on Result<T> {
   /// Returns the encapsulated result of the given transform function applied to the encapsulated value if this instance represents success or the original encapsulated Throwable exception if it is failure.
   /// Note, that this function rethrows any Throwable exception thrown by transform function. See mapCatching for an alternative that encapsulates exceptions.
 
@@ -152,7 +151,7 @@ extension Map<T> on Result<T> {
   }
 }
 
-extension Recover<T> on Result<T> {
+extension RecoverExtensions<T> on Result<T> {
   /// Returns the encapsulated result of the given transform function applied to the encapsulated Throwable exception if this instance represents failure or the original encapsulated value if it is success.
   /// Note, that this function rethrows any Throwable exception thrown by transform function. See recoverCatching for an alternative that encapsulates exceptions.
   Result<R> recover<R>(R Function(Exception exception) transform) {

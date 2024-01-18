@@ -1,7 +1,3 @@
-import 'dart:collection';
-
-import 'package:dartx/src/extensions/iterable.dart';
-
 extension MapExtensions<K, V> on Map<K, V> {
   V? get(K key) => this[key];
 
