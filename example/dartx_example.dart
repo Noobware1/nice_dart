@@ -1,7 +1,5 @@
 import 'package:dartx/dartx.dart';
 
-import 'package:dartx/src/extensions/string.dart';
-
 void main() {
   var plus = '1'.plus('2').plus(3);
   print(plus); // 123
@@ -73,7 +71,7 @@ void main() {
   print(toNum); // 123
 
   var toNumOrNull = 'null'.toNumOrNull();
-  print(null); // 123
+  print(toNumOrNull); // 123
 
   var toInt = '123'.toInt();
   print(toInt); // 123
@@ -98,4 +96,20 @@ void main() {
 
   var substringAfterLast = 'abcabc'.substringAfterLast('b');
   print(substringAfterLast); // c
+
+  final List<int>? a = null;
+  final Iterable<int>? b = null;
+  final Map<String, int>? c = null;
+  final String? d = null;
+  print(a.orEmpty());
+  print(b.orEmpty());
+  print(c.orEmpty());
+  print(d.orEmpty());
+  print(test(a));
+}
+
+List<int> test(List<int>? list) {
+  return list
+      .let((it) => it?.mapListIndexed((index, e) => e * index))
+      .orEmpty();
 }

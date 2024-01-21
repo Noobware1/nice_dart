@@ -1,4 +1,4 @@
-extension Scopes<T extends Object> on T {
+extension Scopes<T extends Object?> on T {
   /// Calls the specified function block with this value as its receiver and returns this value.
   T apply(void Function(T it) block) {
     block(this);
@@ -26,5 +26,3 @@ extension Scopes<T extends Object> on T {
     return !predicate(this) ? this : null;
   }
 }
-
-
