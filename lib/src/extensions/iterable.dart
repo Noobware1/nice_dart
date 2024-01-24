@@ -4,7 +4,7 @@ extension OrEmptyIterable<E> on Iterable<E>? {
   }
 }
 
-extension FaltExtensionsOnIterable<E> on List<List<E>> {
+extension FlattenExtensionsOnIterable<E> on Iterable<Iterable<E>> {
   Iterable<E> flatten() sync* {
     for (final list in this) {
       yield* list;

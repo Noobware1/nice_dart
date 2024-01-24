@@ -6,7 +6,7 @@ extension OrEmptyList<E> on List<E>? {
   }
 }
 
-extension FaltExtensions<E> on List<List<E>> {
+extension FlattenExtensionsOnList<E> on List<List<E>> {
   List<E> flatten() => [for (final list in this) ...list];
 }
 
@@ -39,7 +39,6 @@ extension MapListNotNull<E> on Iterable<E?> {
     }
     return l;
   }
-
 }
 
 extension NullableListExtensions<E> on List<E>? {
