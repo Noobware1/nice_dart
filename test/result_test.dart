@@ -19,10 +19,15 @@ void main() {
 
     test('runCatching', () {
       var result = runCatching<int>(() => 1);
+
       expect(result.isSuccess, equals(true));
       expect(result.getOrNull(), equals(1));
 
       result = runCatching<int>(() => throw Exception('Error'));
+      expect(result.isFailure, equals(true));
+      expect(result.exceptionOrNull(), isA<Exception>());
+      var b = 1;
+      result = b.runCatching(() => b ~/ 0);
       expect(result.isFailure, equals(true));
       expect(result.exceptionOrNull(), isA<Exception>());
     });

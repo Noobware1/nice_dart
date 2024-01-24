@@ -10,7 +10,7 @@ void main() {
 
     test('getOrNull', () {
       expect([1, 2, 3].getOrNull(1), equals(2));
-      expect([1, 2, 3].getOrNull(3), isNull);
+      expect([1, 2, 3].getOrNull(3),  isNull);
     });
 
     test('getOrElse', () {

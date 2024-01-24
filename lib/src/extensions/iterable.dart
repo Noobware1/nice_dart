@@ -1,6 +1,3 @@
-import 'package:dartx/src/extensions/object.dart';
-
-
 
 extension OrEmptyIterable<E> on Iterable<E>? {
   Iterable<E> orEmpty() {
@@ -19,8 +16,8 @@ extension FaltExtensionsOnIterable<E> on List<List<E>> {
 extension MapNotNull<E> on Iterable<E?> {
   Iterable<R> mapNotNull<R>(R Function(E it) transform) sync* {
     for (final element in this) {
-      if (element.isNotNull) {
-        yield transform(element as E);
+      if (element != null) {
+        yield transform(element);
       }
     }
   }
@@ -29,8 +26,8 @@ extension MapNotNull<E> on Iterable<E?> {
       R Function(int index, E it) transform) sync* {
     for (var index = 0; index < length; index++) {
       final element = elementAt(index);
-      if (element.isNotNull) {
-        yield transform(index, element as E);
+      if (element != null) {
+        yield transform(index, element);
       }
     }
   }

@@ -1,8 +1,13 @@
 import 'package:dartx/src/extensions/iterable.dart';
-import 'package:dartx/src/extensions/object.dart';
 
 extension StringExtensions on String {
   int get lastIndex => length - 1;
+
+  String captialize() =>
+      isNotEmpty ? '${this[0].toUpperCase()}${substring(1)}' : this;
+
+  String decapitalize() =>
+      isNotEmpty ? '${this[0].toLowerCase()}${substring(1, length)}' : this;
 
   String get(int index) => this[index];
 
@@ -163,11 +168,11 @@ extension StringExtensions on String {
 }
 
 extension NullableStringExtensions on String? {
-  num? toNumOrNull() => isNull ? null : num.tryParse(this!);
+  num? toNumOrNull() => this == null ? null : num.tryParse(this!);
 
-  int? toIntOrNull() => isNull ? null : int.tryParse(this!);
+  int? toIntOrNull() => this == null ? null : int.tryParse(this!);
 
-  double? toDoubleOrNull() => isNull ? null : double.tryParse(this!);
+  double? toDoubleOrNull() => this == null ? null : double.tryParse(this!);
 }
 
 extension OrEmptyOnString on String? {

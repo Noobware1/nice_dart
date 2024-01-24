@@ -1,4 +1,4 @@
-import 'package:dartx/src/extensions/object.dart';
+
 import 'package:dartx/src/extensions/iterable.dart';
 
 extension OrEmptyList<E> on List<E>? {
@@ -13,7 +13,7 @@ extension FaltExtensions<E> on List<List<E>> {
 
 extension ToIterable<E> on List<E>? {
   Iterable<E> toIterable() {
-    return isNull
+    return this == null
         ? Iterable.empty()
         : Iterable.generate(this!.length, (i) => this![i]);
   }
@@ -23,8 +23,8 @@ extension MapListNotNull<E> on Iterable<E?> {
   List<R> mapListNotNull<R>(R Function(E it) transform) {
     final l = <R>[];
     for (final element in this) {
-      if (element.isNotNull) {
-        l.add(transform(element as E));
+      if (element != null) {
+        l.add(transform(element));
       }
     }
     return l;
@@ -34,8 +34,8 @@ extension MapListNotNull<E> on Iterable<E?> {
     final l = <R>[];
     for (var index = 0; index < length; index++) {
       final element = elementAt(index);
-      if (element.isNotNull) {
-        l.add(transform(index, element as E));
+      if (element != null) {
+        l.add(transform(index, element));
       }
     }
     return l;
