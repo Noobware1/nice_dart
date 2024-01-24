@@ -3,14 +3,7 @@ import 'package:test/test.dart';
 
 void main() {
   group('ListExtensions', () {
-    test('mapList', () {
-      expect([1, 2, 3].mapList((e) => e * 2), equals([2, 4, 6]));
-    });
-
-    test('mapListIndexed', () {
-      expect([1, 2, 3].mapListIndexed((index, e) => e / index),
-          equals([double.infinity, 2.0, 1.5]));
-    });
+  
 
     test('lastIndexOf', () {
       expect(['a', 'b', 'c', 'b'].lastIndexOf('b'), equals(3));

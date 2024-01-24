@@ -1,4 +1,3 @@
-
 import 'package:dartx/src/extensions/iterable.dart';
 
 extension OrEmptyList<E> on List<E>? {
@@ -40,6 +39,7 @@ extension MapListNotNull<E> on Iterable<E?> {
     }
     return l;
   }
+
 }
 
 extension NullableListExtensions<E> on List<E>? {
@@ -58,18 +58,6 @@ extension NonNulls<E> on List<E?> {
 }
 
 extension ListExtensions<E> on List<E> {
-  /// slower than map but faster then calling .toList() on the mapped iterable
-  List<T> mapList<T>(T Function(E e) toElement) =>
-      [for (final e in this) toElement(e)];
-
-  List<T> mapListIndexed<T>(T Function(int index, E e) toElement) {
-    final l = <T>[];
-    for (var i = 0; i < length; i++) {
-      l.add(toElement(i, this[i]));
-    }
-    return l;
-  }
-
   int lastIndexOf(E element) {
     for (var i = lastIndex; i >= 0; i--) {
       if (this[i] == element) return i;

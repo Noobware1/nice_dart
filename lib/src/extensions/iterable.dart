@@ -1,4 +1,3 @@
-
 extension OrEmptyIterable<E> on Iterable<E>? {
   Iterable<E> orEmpty() {
     return this ?? Iterable.empty();
@@ -34,6 +33,18 @@ extension MapNotNull<E> on Iterable<E?> {
 }
 
 extension IterableExtensions<E> on Iterable<E> {
+  /// slower than map but faster then calling .toList() on the mapped iterable
+  List<T> mapList<T>(T Function(E e) toElement) =>
+      [for (final e in this) toElement(e)];
+
+  List<T> mapListIndexed<T>(T Function(int index, E e) toElement) {
+    final l = <T>[];
+    for (var i = 0; i < length; i++) {
+      l.add(toElement(i, elementAt(i)));
+    }
+    return l;
+  }
+
   E get(int index) => this is List ? (this as List)[index] : elementAt(index);
 
   E? getOrNull(int index) => index < length ? get(index) : null;

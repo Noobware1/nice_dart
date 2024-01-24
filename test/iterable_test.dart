@@ -3,6 +3,14 @@ import 'package:test/test.dart';
 
 void main() {
   group('IterableExtensions', () {
+    test('mapList', () {
+      expect([1, 2, 3].mapList((e) => e * 2), equals([2, 4, 6]));
+    });
+
+    test('mapListIndexed', () {
+      expect([1, 2, 3].mapListIndexed((index, e) => e / index),
+          equals([double.infinity, 2.0, 1.5]));
+    });
     test('get', () {
       expect([1, 2, 3].get(1), equals(2));
       expect(() => [1, 2, 3].get(4), throwsRangeError);
@@ -10,7 +18,7 @@ void main() {
 
     test('getOrNull', () {
       expect([1, 2, 3].getOrNull(1), equals(2));
-      expect([1, 2, 3].getOrNull(3),  isNull);
+      expect([1, 2, 3].getOrNull(3), isNull);
     });
 
     test('getOrElse', () {
