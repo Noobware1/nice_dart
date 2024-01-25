@@ -15,5 +15,14 @@ void main() {
       repeat(5, (index) => count++);
       expect(count, equals(5));
     });
+
+    test('run', () {
+      var count = 1;
+      count = run(() {
+        count++;
+        return count;
+      });
+      expect(count, equals(2));
+    });
   });
 }
