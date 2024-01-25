@@ -9,6 +9,17 @@ void main() {
       expect(map.get('other'), isNull);
     });
 
+    test('add', () {
+      var map = <String, String>{};
+      expect(map.add('key', 'value').get('key'), equals('value'));
+      expect(map.get('other'), isNull);
+    });
+
+    test('toJson', () {
+      var map = {'key': 'value'};
+      expect(map.toJson(), equals('{"key":"value"}'));
+    });
+
     test('getOrDefault', () {
       var map = {'key': 'value'};
       expect(map.getOrDefault('key', 'default'), equals('value'));
