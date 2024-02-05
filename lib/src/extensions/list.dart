@@ -1,8 +1,15 @@
 import 'package:nice_dart/src/extensions/iterable.dart';
+import 'package:nice_dart/src/binary_search.dart' as bin;
 
 extension OrEmptyList<E> on List<E>? {
   List<E> orEmpty() {
     return this ?? [];
+  }
+}
+
+extension BinarySearch<T extends Comparable<T>> on List<T> {
+  int binarySearch(T targetKey) {
+    return bin.binarySearch(this, targetKey);
   }
 }
 
