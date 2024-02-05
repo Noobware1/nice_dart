@@ -1,4 +1,4 @@
-import 'package:dartx/dartx.dart';
+import 'package:nice_dart/nice_dart.dart';
 
 void main() {
   var plus = '1'.plus('2').plus(3);

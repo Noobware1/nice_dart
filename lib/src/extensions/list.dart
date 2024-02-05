@@ -1,4 +1,4 @@
-import 'package:dartx/src/extensions/iterable.dart';
+import 'package:nice_dart/src/extensions/iterable.dart';
 
 extension OrEmptyList<E> on List<E>? {
   List<E> orEmpty() {

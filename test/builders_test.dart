@@ -1,6 +1,5 @@
-import 'package:dartx/src/builders.dart';
+import 'package:nice_dart/src/builders.dart';
 import 'package:test/test.dart';
-
 
 void main() {
   group('Builders', () {

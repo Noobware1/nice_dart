@@ -1,4 +1,4 @@
-import 'package:dartx/src/result.dart';
+import 'package:nice_dart/src/result.dart';
 import 'package:test/test.dart';
 
 void main() {

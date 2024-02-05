@@ -1,4 +1,4 @@
-import 'package:dartx/src/functions.dart';
+import 'package:nice_dart/src/functions.dart';
 import 'package:test/test.dart';
 
 void main() {

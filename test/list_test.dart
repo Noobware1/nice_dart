@@ -1,10 +1,8 @@
-import 'package:dartx/src/extensions/list.dart';
+import 'package:nice_dart/src/extensions/list.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('ListExtensions', () {
-  
-
     test('lastIndexOf', () {
       expect(['a', 'b', 'c', 'b'].lastIndexOf('b'), equals(3));
       expect(['a', 'b', 'c'].lastIndexOf('d'), equals(-1));

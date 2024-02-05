@@ -1,4 +1,4 @@
-import 'package:dartx/src/extensions/iterable.dart';
+import 'package:nice_dart/src/extensions/iterable.dart';
 import 'package:test/test.dart';
 
 void main() {

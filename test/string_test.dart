@@ -1,4 +1,4 @@
-import 'package:dartx/src/extensions/string.dart';
+import 'package:nice_dart/src/extensions/string.dart';
 import 'package:test/test.dart';
 
 void main() {

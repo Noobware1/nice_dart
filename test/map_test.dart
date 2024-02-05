@@ -1,4 +1,4 @@
-import 'package:dartx/src/extensions/map.dart';
+import 'package:nice_dart/src/extensions/map.dart';
 import 'package:test/test.dart';
 
 void main() {

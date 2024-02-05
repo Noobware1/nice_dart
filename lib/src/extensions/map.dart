@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dartx/dartx.dart';
+import 'package:nice_dart/src/extensions/scopes.dart';
 
 extension MapExtensions<K, V> on Map<K, V> {
   V? get(K key) => this[key];

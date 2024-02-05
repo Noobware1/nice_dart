@@ -1,4 +1,4 @@
-import 'package:dartx/src/extensions/scopes.dart';
+import 'package:nice_dart/src/extensions/scopes.dart';
 import 'package:test/test.dart';
 
 class TestClass {
