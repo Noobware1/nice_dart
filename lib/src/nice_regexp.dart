@@ -1,10 +1,11 @@
-import 'package:nice_dart/src/extensions/string.dart' show StringToRegex;
+import 'package:nice_dart/src/extensions/scopes.dart';
+import 'package:nice_dart/src/extensions/string.dart';
 
 class NiceRegExp implements RegExp {
-  final String _input;
-  final RegExp _source;
-  final int _from;
-  final int _to;
+  String _input;
+  RegExp _source;
+  int _from;
+  int _to;
 
   factory NiceRegExp(
     String source, {
@@ -44,7 +45,10 @@ class NiceRegExp implements RegExp {
         _to = to;
 
   NiceRegExp matcher(String input) {
-    return NiceRegExp._(input, _source, _from, input.length);
+    return apply((it) {
+      _input = input;
+      _to = _input.length;
+    });
   }
 
   @override
@@ -65,7 +69,6 @@ class NiceRegExp implements RegExp {
 
   @override
   bool hasMatch([String? input]) {
-    print(currentRegionalString);
     return _source.hasMatch(input ?? currentRegionalString);
   }
 
@@ -98,26 +101,31 @@ class NiceRegExp implements RegExp {
   }
 
   NiceRegExp region(int start, int end) {
-    if ((start < 0) || (start > _input.length)) {
-      throw IndexError.withLength(start, _input.length, indexable: _input);
-    }
-    if ((end < 0) || (end > _input.length)) {
-      throw IndexError.withLength(end, _input.length, indexable: _input);
-    }
-    if (start > end) {
-      throw ArgumentError.value(start, "start", "start must be <= end");
-    }
-    final from = start;
-    final to = end;
-    return NiceRegExp._(_input, _source, from, to);
+    return apply((it) {
+      if ((start < 0) || (start > _input.length)) {
+        throw IndexError.withLength(start, _input.length, indexable: _input);
+      }
+      if ((end < 0) || (end > _input.length)) {
+        throw IndexError.withLength(end, _input.length, indexable: _input);
+      }
+      if (start > end) {
+        throw ArgumentError.value(start, "start", "start must be <= end");
+      }
+      _from = start;
+      _to = end;
+    });
   }
 
   NiceRegExp useRegExp(RegExp regExp) {
-    return NiceRegExp._(_input, regExp, _from, _to);
+    return apply((it) {
+      _source = regExp;
+    });
   }
 
   NiceRegExp usePattern(String pattern) {
-    return NiceRegExp._(_input, pattern.toRegex(), _from, _to);
+    return apply((it) {
+      _source = pattern.toRegex();
+    });
   }
 
   String get currentRegionalString =>
