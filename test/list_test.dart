@@ -60,6 +60,10 @@ void main() {
       expect([1, 2, 3].orEmpty(), equals([1, 2, 3]));
       expect(null.orEmpty(), equals([]));
     });
+
+    test('removeFirst', () {
+      expect([1, 2, 3].removeFirst(), equals(1));
+    });
   });
 
   group('FaltExtensionsOnList', () {

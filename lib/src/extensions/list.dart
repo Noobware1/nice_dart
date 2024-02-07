@@ -6,6 +6,12 @@ extension ListOrEmpty<E> on List<E>? {
   }
 }
 
+extension ListRemoveFirst<E> on List<E> {
+  E removeFirst() {
+    return removeAt(0);
+  }
+}
+
 extension ListFlatten<E> on List<List<E>> {
   List<E> flatten() => [for (final list in this) ...list];
 }
