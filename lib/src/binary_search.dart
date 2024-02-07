@@ -1,10 +1,12 @@
-int binarySearch<T extends Comparable<T>>(List<T> list, T targetKey) {
+import 'package:nice_dart/nice_dart.dart';
+
+int binarySearch<T extends Comparable<T>>(Iterable<T> list, T targetKey) {
   int low = 0;
   int high = list.length - 1;
 
   while (low <= high) {
     int mid = (low + high) ~/ 2;
-    int compareResult = list[mid].compareTo(targetKey);
+    int compareResult = list.get(mid).compareTo(targetKey);
 
     if (compareResult == 0) {
       return mid; // Element found

@@ -25,6 +25,11 @@ void main() {
       expect(map.getOrDefault('key', 'default'), equals('value'));
       expect(map.getOrDefault('other', 'default'), equals('default'));
     });
+    test('getOrElse', () {
+      var map = {'key': 'value'};
+      expect(map.getOrElse('key', (key) => 'default'), equals('value'));
+      expect(map.getOrElse('default', (key) => key), equals('default'));
+    });
 
     test('forEachIndexed', () {
       var map = {'key1': 'value1', 'key2': 'value2'};
@@ -36,6 +41,11 @@ void main() {
       });
       expect(keys, equals(['key1', 'key2']));
       expect(values, equals(['value1', 'value2']));
+    });
+
+    test('flatMap', () {
+      expect({'key': 'value'}.flatMap((key, value) => "$key: $value"),
+          equals(['key: value']));
     });
   });
 

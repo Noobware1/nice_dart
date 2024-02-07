@@ -27,7 +27,7 @@ void main() {
       expect(result.isFailure, equals(true));
       expect(result.exceptionOrNull(), isA<Exception>());
       var b = 1;
-      result = b.runCatching(() => b ~/ 0);
+      result = runCatching(() => b ~/ 0);
       expect(result.isFailure, equals(true));
       expect(result.exceptionOrNull(), isA<Exception>());
     });

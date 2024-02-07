@@ -98,5 +98,28 @@ void main() {
           ].flatten(),
           equals([1, 2, 3, 4, 5, 6]));
     });
+
+    test('faltMap', () {
+      expect(
+          [
+            [1, 2, 3],
+            [4, 5, 6]
+          ].flatMap((it) => it * 2),
+          equals([2, 4, 6, 8, 10, 12]));
+    });
+  });
+
+  group('NullableExtenstions', () {
+    test('isEmptyOrNull', () {
+      expect([].isEmptyOrNull, equals(true));
+      expect([1].isEmptyOrNull, equals(false));
+      expect(null.isEmptyOrNull, equals(true));
+    });
+
+    test('isNotEmptyOrNull', () {
+      expect([].isNotEmptyOrNull, equals(false));
+      expect([1].isNotEmptyOrNull, equals(true));
+      expect(null.isNotEmptyOrNull, equals(false));
+    });
   });
 }

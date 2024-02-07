@@ -55,20 +55,6 @@ void main() {
     });
   });
 
-  group('NullableExtenstions', () {
-    test('isEmptyOrNull', () {
-      expect([].isEmptyOrNull, equals(true));
-      expect([1].isEmptyOrNull, equals(false));
-      expect(null.isEmptyOrNull, equals(true));
-    });
-
-    test('isNotEmptyOrNull', () {
-      expect([].isNotEmptyOrNull, equals(false));
-      expect([1].isNotEmptyOrNull, equals(true));
-      expect(null.isNotEmptyOrNull, equals(false));
-    });
-  });
-
   group('OrEmptyList', () {
     test('orEmpty', () {
       expect([1, 2, 3].orEmpty(), equals([1, 2, 3]));
