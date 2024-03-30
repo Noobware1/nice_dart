@@ -40,11 +40,12 @@ extension IterableMapNotNull<E> on Iterable<E?> {
 extension IterableMapNotNullIndexed<E> on Iterable<E?> {
   Iterable<R> mapNotNullIndexed<R>(
       R Function(int index, E it) transform) sync* {
-    for (var index = 0; index < length; index++) {
-      final element = elementAt(index);
+    var index = 0;
+    for (final element in this) {
       if (element != null) {
         yield transform(index, element);
       }
+      index++;
     }
   }
 }
@@ -57,11 +58,8 @@ extension IterableMapList<E> on Iterable<E> {
 
 extension IterableMapListIndexed<E> on Iterable<E> {
   List<T> mapListIndexed<T>(T Function(int index, E e) toElement) {
-    final l = <T>[];
-    for (var i = 0; i < length; i++) {
-      l.add(toElement(i, elementAt(i)));
-    }
-    return l;
+    var index = 0;
+    return [for (final e in this) toElement(index++, e)];
   }
 }
 
@@ -82,6 +80,14 @@ extension IterableLastIndex<E> on Iterable<E> {
   int get lastIndex => isEmpty ? -1 : length - 1;
 }
 
+extension IterableSecondLast<E> on Iterable<E> {
+  E get secondLast => get(lastIndex - 1);
+}
+
+extension IterableSecondLastOrNull<E> on Iterable<E> {
+  E? get secondLastOrNull => getOrNull(lastIndex - 1);
+}
+
 extension IterableForEachIndexed<E> on Iterable<E> {
   void forEachIndexed(void Function(int index, E it) action) {
     var index = 0;
@@ -93,8 +99,9 @@ extension IterableForEachIndexed<E> on Iterable<E> {
 
 extension IterableMapIndexed<E> on Iterable<E> {
   Iterable<R> mapIndexed<R>(R Function(int index, E it) action) sync* {
-    for (var index = 0; index < length; index++) {
-      yield action(index, elementAt(index));
+    var index = 0;
+    for (final item in this) {
+      yield action(index++, item);
     }
   }
 }

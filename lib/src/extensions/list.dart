@@ -1,3 +1,4 @@
+import 'package:nice_dart/nice_dart.dart';
 import 'package:nice_dart/src/extensions/iterable.dart';
 
 extension ListOrEmpty<E> on List<E>? {
@@ -25,25 +26,21 @@ extension ListToIterable<E> on List<E>? {
 }
 
 extension ListMapListNotNull<E> on Iterable<E?> {
-  List<R> mapListNotNull<R>(R Function(E it) transform) {
-    final l = <R>[];
-    for (final element in this) {
-      if (element != null) {
-        l.add(transform(element));
-      }
-    }
-    return l;
-  }
+  List<R> mapListNotNull<R>(R Function(E it) transform) => [
+        for (final element in this)
+          if (element != null) transform(element)
+      ];
 }
 
 extension ListMapListNotNullIndexed<E> on Iterable<E?> {
   List<R> mapListNotNullIndexed<R>(R Function(int index, E it) transform) {
     final l = <R>[];
-    for (var index = 0; index < length; index++) {
-      final element = elementAt(index);
+    var index = 0;
+    for (final element in this) {
       if (element != null) {
         l.add(transform(index, element));
       }
+      index++;
     }
     return l;
   }
