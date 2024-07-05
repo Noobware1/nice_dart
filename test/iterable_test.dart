@@ -122,4 +122,22 @@ void main() {
       expect(null.isNotEmptyOrNull, equals(false));
     });
   });
+
+  test('joinTo', () {
+    expect(
+        ['h', 'e', 'l', 'l', 'o']
+            .joinTo(StringBuffer(), separator: "")
+            .toString(),
+        equals('hello'));
+  });
+
+  test('min & minOrNull', () {
+    expect([1, 2, 3, 4, 5].min(), equals(1));
+    expect(<int>[].minOrNull(), equals(null));
+  });
+
+  test('max', () {
+    expect([1, 2, 3, 4, 5].max(), equals(5));
+    expect(<int>[].maxOrNull(), equals(null));
+  });
 }

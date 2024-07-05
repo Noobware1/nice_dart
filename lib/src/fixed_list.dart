@@ -26,12 +26,19 @@ class FixedList<E> extends ListBase<E> {
   }
 
   @override
+  void insert(int index, E element) {
+    RangeError.checkValidIndex(index, this);
+    super.insert(index, element);
+  }
+
+  @override
   void add(E element) {
-    throw UnsupportedError('Cannot add to a FixedList');
+    final index = _list.lastIndexWhere((element) => element != null) + 1;
+    return insert(index, element);
   }
 
   @override
   void addAll(Iterable<E> iterable) {
-    throw UnsupportedError('Cannot add to a FixedList');
+    iterable.forEach(add);
   }
 }

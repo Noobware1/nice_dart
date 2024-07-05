@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:nice_dart/nice_dart.dart';
 import 'package:nice_dart/src/extensions/iterable.dart';
 
 extension StringLastIndex on String {
@@ -278,4 +279,171 @@ extension StringIsEmptyOrNull on String? {
 
 extension StringIsNotEmptyOrNull on String? {
   bool get isNotEmptyOrNull => this != null && this!.isNotEmpty;
+}
+
+extension StringIsWhiteSpace on String {
+  bool get isWhiteSpace {
+    if (isEmpty) return false;
+    int ch = codeUnitAt(0);
+    return (ch >= 0x0009 && ch <= 0x000d) ||
+        (ch >= 0x001c && ch <= 0x0020) ||
+        ch == 0x00a0 ||
+        (ch > 0x1000 &&
+            (ch == 0x1680 ||
+                (ch >= 0x2000 && ch <= 0x200a) ||
+                ch == 0x2028 ||
+                ch == 0x2029 ||
+                ch == 0x202f ||
+                ch == 0x205f ||
+                ch == 0x3000));
+  }
+}
+
+extension StringIsDigit on String {
+  static const _rangeStart = [
+    0x0030,
+    0x0660,
+    0x06f0,
+    0x07c0,
+    0x0966,
+    0x09e6,
+    0x0a66,
+    0x0ae6,
+    0x0b66,
+    0x0be6,
+    0x0c66,
+    0x0ce6,
+    0x0d66,
+    0x0de6,
+    0x0e50,
+    0x0ed0,
+    0x0f20,
+    0x1040,
+    0x1090,
+    0x17e0,
+    0x1810,
+    0x1946,
+    0x19d0,
+    0x1a80,
+    0x1a90,
+    0x1b50,
+    0x1bb0,
+    0x1c40,
+    0x1c50,
+    0xa620,
+    0xa8d0,
+    0xa900,
+    0xa9d0,
+    0xa9f0,
+    0xaa50,
+    0xabf0,
+    0xff10,
+  ];
+
+  /// Returns the index of the largest element in [array] smaller or equal to the specified [needle],
+  /// or -1 if [needle] is smaller than the smallest element in [array].
+  int _binarySearchRange(List<int> array, int needle) {
+    var bottom = 0;
+    var top = array.lastIndex;
+    var middle = -1;
+    var value = 0;
+    while (bottom <= top) {
+      middle = (bottom + top) ~/ 2;
+      value = array[middle];
+      if (needle > value) {
+        bottom = middle + 1;
+      } else if (needle == value) {
+        return middle;
+      } else {
+        top = middle - 1;
+      }
+    }
+    return middle - (needle < value ? 1 : 0);
+  }
+
+  bool get isDigit {
+    final ch = codeUnitAt(0);
+    final index = _binarySearchRange(_rangeStart, ch);
+    final diff = ch - _rangeStart[index];
+    return ((diff < 10) ? diff : -1) >= 0;
+  }
+}
+
+extension StringIndexWhere on String {
+  int indexWhere(bool Function(String it) predicate) {
+    for (var index = 0; index < length; index++) {
+      if (predicate(this[index])) return index;
+    }
+    return -1;
+  }
+}
+
+extension StringIsEvery on String {
+  bool every(bool Function(String) test) {
+    for (var i = 0; i < length; i++) {
+      if (!test(this[i])) return false;
+    }
+    return true;
+  }
+}
+
+extension StringIsBlank on String {
+  bool get isBlank => every((it) => it.isWhiteSpace);
+}
+
+extension StringIsNotBlank on String {
+  bool get isNotBlank => !isBlank;
+}
+
+extension StringLines on String {
+  List<String> get lines {
+    return split(RegExp(r'\r\n|\n|\r'));
+  }
+}
+
+extension StringTrimIndent on String {
+  String trimIndent() => replaceIndent();
+}
+
+extension StringReplaceIndent on String {
+//  * Detects a common minimal indent like it does [trimIndent] and replaces it with the specified [newIndent].
+//  */
+  String replaceIndent([String newIndent = ""]) {
+    final lines = this.lines;
+
+    final minCommonIndent = lines
+            .where((it) => it.isNotBlank)
+            .map((it) => it._indentWidth())
+            .minOrNull() ??
+        0;
+
+    return _reIndent(lines, (line) => _getIndentFunction(newIndent, line),
+        (line) => line.drop(minCommonIndent));
+  }
+
+  int _indentWidth() =>
+      indexWhere((it) => !it.isWhiteSpace).let((it) => it == -1 ? length : it);
+
+  String _getIndentFunction(String indent, String line) {
+    if (indent.isEmpty) {
+      return line;
+    } else {
+      return indent + line;
+    }
+  }
+
+  String _reIndent(List<String> list, String Function(String) indentAddFunction,
+      String? Function(String) indentCutFunction) {
+    final lastIndex = list.lastIndex;
+    return list
+        .mapNotNullIndexed((index, value) {
+          if ((index == 0 || index == lastIndex) && value.isBlank) {
+            return null;
+          } else {
+            return indentCutFunction(value)?.let(indentAddFunction) ?? value;
+          }
+        })
+        .joinTo(StringBuffer(), separator: '\n')
+        .toString();
+  }
 }

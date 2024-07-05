@@ -158,5 +158,52 @@ void main() {
       expect('abc'.orEmpty(), equals('abc'));
       expect(null.orEmpty(), equals(''));
     });
+
+    test('isBlank & isNotBlank', () {
+      expect("".isBlank, true);
+      expect("  \t\n".isBlank, true);
+      expect("abc".isNotBlank, true);
+      expect("  \t\n".isNotBlank, false);
+    });
+
+    test('isDigit', () {
+      expect("123".isDigit, true);
+      expect("abc".isDigit, false);
+    });
+
+    test('trimIndent', () {
+      expect(
+          """
+            ABC
+            123
+            456
+        """
+              .trimIndent(),
+          equals('ABC\n123\n456'));
+    });
+
+    test('replaceIndent', () {
+      expect(
+          """
+            ABC
+            123
+            456
+        """
+              .replaceIndent("|"),
+          equals('|ABC\n|123\n|456'));
+    });
+  });
+
+  test('every', () {
+    expect('0123455789'.every((element) => element.isDigit), equals(true));
+  });
+
+  test('indexWhere', () {
+    expect('Hello world'.indexWhere((element) => element.isBlank), equals(5));
+  });
+
+  test('lines', () {
+    expect(
+        'Hello world\nBye World'.lines, equals(['Hello world', 'Bye World']));
   });
 }

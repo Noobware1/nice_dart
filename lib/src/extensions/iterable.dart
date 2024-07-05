@@ -1,4 +1,5 @@
 import 'package:nice_dart/src/binary_search.dart' as bin;
+import 'dart:math' as math;
 
 extension IterableBinarySearch<T extends Comparable<T>> on List<T> {
   int binarySearch(T targetKey) {
@@ -28,22 +29,28 @@ extension IterableFlatMap<E> on Iterable<Iterable<E>> {
 }
 
 extension IterableMapNotNull<E> on Iterable<E?> {
-  Iterable<R> mapNotNull<R>(R Function(E it) transform) sync* {
-    for (final element in this) {
+  Iterable<R> mapNotNull<R extends Object>(R? Function(E it) transform) sync* {
+    for (var element in this) {
       if (element != null) {
-        yield transform(element);
+        var result = transform(element);
+        if (result != null) {
+          yield result;
+        }
       }
     }
   }
 }
 
 extension IterableMapNotNullIndexed<E> on Iterable<E?> {
-  Iterable<R> mapNotNullIndexed<R>(
-      R Function(int index, E it) transform) sync* {
+  Iterable<R> mapNotNullIndexed<R extends Object>(
+      R? Function(int index, E it) transform) sync* {
     var index = 0;
-    for (final element in this) {
+    for (var element in this) {
       if (element != null) {
-        yield transform(index, element);
+        var result = transform(index, element);
+        if (result != null) {
+          yield result;
+        }
       }
       index++;
     }
@@ -152,4 +159,66 @@ extension IterableIsEmptyOrNull<E> on Iterable<E>? {
 
 extension IterableIsNotEmptyOrNull<E> on Iterable<E>? {
   bool get isNotEmptyOrNull => this != null && this!.isNotEmpty;
+}
+
+extension IterableJoinTo<E> on Iterable<E> {
+  StringBuffer joinTo(StringBuffer buffer,
+      {String separator = ', ',
+      String prefix = '',
+      String postfix = '',
+      int limit = -1,
+      String truncated = '...',
+      String Function(E)? transform}) {
+    buffer.write(prefix);
+    var count = 0;
+    for (var element in this) {
+      if (++count > 1) buffer.write(separator);
+      if (limit < 0 || count <= limit) {
+        if (transform != null) {
+          buffer.write(transform(element));
+        } else {
+          buffer.write(element);
+        }
+      } else {
+        break;
+      }
+    }
+    if (limit >= 0 && count > limit) buffer.write(truncated);
+    buffer.write(postfix);
+    return buffer;
+  }
+}
+
+extension IterableMin<E extends num> on Iterable<E> {
+  E min() {
+    var min = first;
+    for (var e in this) {
+      min = math.min(min, e);
+    }
+    return min;
+  }
+}
+
+extension IterableMinOrNull<E extends num> on Iterable<E> {
+  E? minOrNull() {
+    if (isEmpty) return null;
+    return min();
+  }
+}
+
+extension IterableMax<E extends num> on Iterable<E> {
+  E max() {
+    var max = first;
+    for (var e in this) {
+      max = math.max(max, e);
+    }
+    return max;
+  }
+}
+
+extension IterableMaxOrNull<E extends num> on Iterable<E> {
+  E? maxOrNull() {
+    if (isEmpty) return null;
+    return max();
+  }
 }
